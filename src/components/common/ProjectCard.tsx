@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Text, Group, Badge, ActionIcon, Tooltip } from '@mantine/core';
-import { IconStar, IconGitFork, IconBookmark } from '@tabler/icons-react';
+import { IconStar, IconBookmark } from '@tabler/icons-react';
 import type { Project } from '../../types';
 import { useSettingsStore } from '../../stores/settings';
 

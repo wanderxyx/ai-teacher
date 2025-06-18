@@ -29,7 +29,7 @@
 1. 克隆项目：
 
 ```bash
-git clone https://github.com/yourusername/ai-teacher.git
+git clone https://github.com/wanderxyx/ai-teacher.git
 cd ai-teacher
 ```
 

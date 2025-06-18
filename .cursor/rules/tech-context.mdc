@@ -1,0 +1,376 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# AI学习助手 - 技术上下文
+
+## 技术栈概览
+
+### 1. 核心框架
+- **Tauri**
+  - 版本: 1.x
+  - 用途: 桌面应用开发
+  - 优势: 轻量、性能好
+
+- **React**
+  - 版本: 18.x
+  - 用途: UI开发
+  - 特性: Hooks, Suspense
+
+- **TypeScript**
+  - 版本: 5.x
+  - 配置: strict mode
+  - 类型检查: 严格
+
+### 2. 状态管理
+- **Zustand**
+  - 版本: 4.x
+  - 特性: 
+    - 简单API
+    - 模块化
+    - TypeScript支持
+
+### 3. UI框架
+- **Mantine**
+  - 版本: 7.x
+  - 组件: 
+    - Layout
+    - Navigation
+    - Forms
+  - 主题: 
+    - 主色调: 蓝色系
+    - 支持明暗主题切换
+    - 自定义间距系统
+    - 统一圆角（4px）
+  - 样式系统:
+    - 基础字号: 14px
+    - 响应式设计
+    - CSS-in-JS
+    - 全局样式
+  - 交互:
+    - 微动效
+    - 柔和反馈
+    - 过渡动画（0.2s ease）
+
+### 4. 数据处理
+- **TanStack Query**
+  - 版本: 5.x
+  - 功能:
+    - 数据获取
+    - 缓存管理
+    - 自动重试
+
+- **Axios**
+  - 版本: 1.x
+  - 用途: HTTP请求
+  - 配置: 拦截器
+
+## 开发环境
+
+### 1. 必要工具
+```bash
+# Node.js
+node: v18.x
+npm: 9.x
+
+# Rust
+rustc: 1.70+
+cargo: 最新版
+
+# 开发工具
+VS Code
+Xcode命令行工具
+```
+
+### 2. 推荐VS Code插件
+```json
+{
+  "extensions": [
+    "rust-lang.rust-analyzer",
+    "tauri-apps.tauri-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "dsznajder.es7-react-js-snippets"
+  ]
+}
+```
+
+### 3. 项目配置
+```json
+// package.json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "tauri": "tauri",
+    "lint": "eslint src --ext ts,tsx",
+    "format": "prettier --write src"
+  }
+}
+
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+## 技术约束
+
+### 1. 性能要求
+```typescript
+interface PerformanceRequirements {
+  startupTime: '< 2s';
+  memoryUsage: '< 200MB';
+  responseTime: '< 100ms';
+  frameRate: '60fps';
+}
+```
+
+### 2. 兼容性要求
+```typescript
+interface Compatibility {
+  os: 'macOS 10.15+';
+  node: '18.x+';
+  rust: '1.70+';
+  screen: 'Retina Display';
+}
+```
+
+### 3. 网络要求
+```typescript
+interface NetworkRequirements {
+  timeout: 30000; // ms
+  retries: 3;
+  cacheTime: 3600; // s
+  offlineSupport: true;
+}
+```
+
+## 依赖管理
+
+### 1. 核心依赖
+```json
+{
+  "dependencies": {
+    "@tauri-apps/api": "^1.x",
+    "react": "^18.x",
+    "react-dom": "^18.x",
+    "@tanstack/react-query": "^5.x",
+    "zustand": "^4.x",
+    "@mantine/core": "^7.x",
+    "@mantine/hooks": "^7.x",
+    "axios": "^1.x"
+  }
+}
+```
+
+### 2. 开发依赖
+```json
+{
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.x",
+    "@types/react": "^18.x",
+    "@types/react-dom": "^18.x",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "eslint": "^8.x",
+    "prettier": "^3.x",
+    "typescript": "^5.x",
+    "vite": "^4.x"
+  }
+}
+```
+
+### 3. 版本控制
+```bash
+# 锁定文件
+pnpm-lock.yaml
+Cargo.lock
+
+# 更新策略
+patch: 自动
+minor: 手动
+major: 评估
+```
+
+## 工具使用模式
+
+### 1. 开发工作流
+```mermaid
+graph TD
+    A[代码编写] --> B[类型检查]
+    B --> C[Lint检查]
+    C --> D[本地测试]
+    D --> E[构建检查]
+    E --> F[提交代码]
+```
+
+### 2. 构建流程
+```mermaid
+graph TD
+    A[源代码] --> B[TypeScript编译]
+    B --> C[Vite构建]
+    C --> D[Tauri打包]
+    D --> E[生成安装包]
+```
+
+### 3. 调试工具
+```typescript
+interface DebugTools {
+  // 开发工具
+  devTools: 'Chrome DevTools';
+  reactDevTools: true;
+  tauriDevTools: true;
+
+  // 日志工具
+  logger: 'debug';
+  performance: 'web-vitals';
+  errorTracking: 'custom';
+}
+```
+
+## 开发实践
+
+### 1. 代码规范
+```typescript
+// ESLint配置
+module.exports = {
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended'
+  ],
+  rules: {
+    // 自定义规则
+  }
+};
+
+// Prettier配置
+module.exports = {
+  semi: true,
+  trailingComma: 'es5',
+  singleQuote: true,
+  printWidth: 80,
+  tabWidth: 2
+};
+```
+
+### 2. Git工作流
+```bash
+# 分支策略
+main: 稳定版本
+develop: 开发版本
+feature/*: 功能开发
+bugfix/*: 问题修复
+
+# 提交规范
+feat: 新功能
+fix: 修复
+docs: 文档
+style: 格式
+refactor: 重构
+test: 测试
+chore: 其他
+```
+
+### 3. 测试策略
+```typescript
+interface TestStrategy {
+  unit: 'Jest';
+  component: 'Testing Library';
+  e2e: 'Playwright';
+  coverage: '80%';
+}
+```
+
+## 部署流程
+
+### 1. 环境配置
+```typescript
+interface Environments {
+  development: {
+    api: 'http://localhost:3000';
+    debug: true;
+  };
+  production: {
+    api: 'https://api.example.com';
+    debug: false;
+  };
+}
+```
+
+### 2. 构建配置
+```typescript
+interface BuildConfig {
+  target: 'mac';
+  arch: ['x64', 'arm64'];
+  format: ['dmg', 'app'];
+  sign: true;
+  notarize: true;
+}
+```
+
+### 3. 发布流程
+```mermaid
+graph TD
+    A[代码合并] --> B[版本标记]
+    B --> C[自动构建]
+    C --> D[签名公证]
+    D --> E[测试验证]
+    E --> F[发布商店]
+```
+
+## 监控和日志
+
+### 1. 性能监控
+```typescript
+interface Metrics {
+  startup: number;
+  memory: number;
+  cpu: number;
+  fps: number;
+}
+```
+
+### 2. 错误追踪
+```typescript
+interface ErrorTracking {
+  type: string;
+  message: string;
+  stack: string;
+  context: object;
+}
+```
+
+### 3. 用户分析
+```typescript
+interface Analytics {
+  session: string;
+  event: string;
+  properties: object;
+  timestamp: number;
+}
+``` 

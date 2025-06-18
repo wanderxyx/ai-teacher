@@ -6,7 +6,10 @@ import {
   Grid,
   Text,
   Center,
-  Loader
+  Loader,
+  Paper,
+  Stack,
+  rem
 } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { ProjectCard } from '../components/common/ProjectCard';
@@ -23,51 +26,56 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <Container size="lg" py="xl">
-      <Title order={1} mb="lg" ta="center">
-        AI 学习助手
-      </Title>
+    <Container size="lg" py={rem(32)}>
+      <Stack gap="xl">
+        <Paper p="xl" radius="sm" withBorder>
+          <Title order={1} mb="lg" ta="center" size="h1">
+            AI 学习助手
+          </Title>
 
-      <TextInput
-        placeholder="搜索 AI 相关项目..."
-        leftSection={<IconSearch size={16} />}
-        size="lg"
-        radius="md"
-        onChange={handleSearch}
-        mb="xl"
-      />
+          <TextInput
+            placeholder="搜索 AI 相关项目..."
+            leftSection={<IconSearch size={16} />}
+            size="lg"
+            radius="sm"
+            onChange={handleSearch}
+          />
+        </Paper>
 
-      {loading && (
-        <Center>
-          <Loader size="lg" />
-        </Center>
-      )}
+        {loading && (
+          <Center>
+            <Loader size="lg" />
+          </Center>
+        )}
 
-      {error && (
-        <Text color="red" ta="center" mb="md">
-          {error}
-        </Text>
-      )}
+        {error && (
+          <Text c="red" ta="center" mb="md">
+            {error}
+          </Text>
+        )}
 
-      <Grid>
-        {projects.map((project) => (
-          <Grid.Col key={project.id} span={{ base: 12, sm: 6, md: 4 }}>
-            <ProjectCard
-              project={project}
-              onSelect={(p) => {
-                const [owner, repo] = p.fullName.split('/');
-                useProjectStore.getState().getProjectDetails(owner, repo);
-              }}
-            />
-          </Grid.Col>
-        ))}
-      </Grid>
+        <Grid gutter="lg">
+          {projects.map((project) => (
+            <Grid.Col key={project.id} span={{ base: 12, sm: 6, md: 4 }}>
+              <ProjectCard
+                project={project}
+                onSelect={(p) => {
+                  const [owner, repo] = p.fullName.split('/');
+                  useProjectStore.getState().getProjectDetails(owner, repo);
+                }}
+              />
+            </Grid.Col>
+          ))}
+        </Grid>
 
-      {!loading && !error && projects.length === 0 && (
-        <Text ta="center" color="dimmed" size="lg">
-          输入关键词开始搜索...
-        </Text>
-      )}
+        {!loading && !error && projects.length === 0 && (
+          <Paper p="xl" radius="sm" withBorder>
+            <Text ta="center" c="dimmed" size="lg">
+              输入关键词开始搜索...
+            </Text>
+          </Paper>
+        )}
+      </Stack>
     </Container>
   );
 };

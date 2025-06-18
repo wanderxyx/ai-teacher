@@ -1,25 +1,47 @@
 import React from 'react';
-import { AppShell, Title } from '@mantine/core';
-import { Outlet, Link } from 'react-router-dom';
+import { AppShell, Title, NavLink, Group, ActionIcon, useMantineColorScheme, rem } from '@mantine/core';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { IconHome, IconApps, IconSun, IconMoon } from '@tabler/icons-react';
 
 const RootLayout: React.FC = () => {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const location = useLocation();
+
   return (
     <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: { base: 200 }, breakpoint: 'sm' }}
+      header={{ height: rem(60) }}
+      navbar={{ width: { base: rem(200) }, breakpoint: 'sm' }}
       padding="md"
     >
-      <AppShell.Header p="xs">
-        <Title order={2}>AI Learning Assistant</Title>
+      <AppShell.Header p="md">
+        <Group justify="space-between" h="100%">
+          <Title order={2} size="h3">AI Learning Assistant</Title>
+          <ActionIcon 
+            variant="light"
+            size="lg"
+            onClick={() => toggleColorScheme()}
+            aria-label="Toggle color scheme"
+          >
+            {colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
+          </ActionIcon>
+        </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="xs">
-        <Link to="/" style={{ textDecoration: 'none', color: 'inherit', marginBottom: '1rem', display: 'block' }}>
-          <Title order={4}>Home</Title>
-        </Link>
-        <Link to="/projects" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-          <Title order={4}>Projects</Title>
-        </Link>
+      <AppShell.Navbar p="md">
+        <NavLink
+          component={Link}
+          to="/"
+          label="Home"
+          leftSection={<IconHome size={16} />}
+          active={location.pathname === '/'}
+        />
+        <NavLink
+          component={Link}
+          to="/projects"
+          label="Projects"
+          leftSection={<IconApps size={16} />}
+          active={location.pathname === '/projects'}
+        />
       </AppShell.Navbar>
 
       <AppShell.Main>
