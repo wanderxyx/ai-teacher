@@ -12,7 +12,7 @@ import { IconSearch } from '@tabler/icons-react';
 import { ProjectCard } from '../components/common/ProjectCard';
 import { useProjectStore } from '../stores/project';
 
-export const HomePage: React.FC = () => {
+const HomePage: React.FC = () => {
   const { projects, loading, error, searchProjects } = useProjectStore();
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,4 +70,6 @@ export const HomePage: React.FC = () => {
       )}
     </Container>
   );
-}; 
+};
+
+export default HomePage; 

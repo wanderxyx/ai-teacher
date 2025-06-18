@@ -1,18 +1,15 @@
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
-import { HomePage } from './pages/HomePage';
-import { useSettingsStore } from './stores/settings';
+import { router } from './routes';
 import '@mantine/core/styles.css';
 
-function App() {
-  const { darkMode } = useSettingsStore();
-
+const App: React.FC = () => {
   return (
-    <MantineProvider
-      defaultColorScheme={darkMode ? 'dark' : 'light'}
-    >
-      <HomePage />
+    <MantineProvider>
+      <RouterProvider router={router} />
     </MantineProvider>
   );
-}
+};
 
 export default App;
