@@ -14,16 +14,32 @@ import {
 import { IconSearch } from '@tabler/icons-react';
 import { ProjectCard } from '../components/common/ProjectCard';
 import { useProjectStore } from '../stores/project';
+import { debounce } from 'lodash';
 
 const HomePage: React.FC = () => {
   const { projects, loading, error, searchProjects } = useProjectStore();
 
+  // 使用useCallback和debounce包装搜索方法
+  const debouncedSearch = React.useCallback(
+    debounce((query: string) => {
+      searchProjects(query);
+    }, 300),
+    []
+  );
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     if (query.length >= 3) {
-      searchProjects(query);
+      debouncedSearch(query);
     }
   };
+
+  // 在组件卸载时取消debounce
+  React.useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   return (
     <Container size="lg" py={rem(32)}>
