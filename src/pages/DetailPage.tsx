@@ -76,4 +76,4 @@ const DetailPage: React.FC = () => {
   );
 };
 
-export default DetailPage; 
+export default DetailPage;

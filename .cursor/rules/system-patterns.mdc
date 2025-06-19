@@ -321,6 +321,10 @@ class ThemeManager {
   }
 }
 ```
+- **主题适配**
+  - 所有 UI 组件（如 ProjectCard）在生成和维护代码时，样式（如文字颜色、背景色、阴影、分割线等）必须适配明暗主题。
+  - 应通过 Mantine 的 useMantineColorScheme 或 theme 变量动态切换颜色，避免写死颜色值。
+  - 生成代码时需自动考虑 colorScheme，保证在 light/dark 下均有良好观感和可读性。
 
 ### 3. 样式系统
 ```typescript

@@ -70,7 +70,7 @@ export class GitHubService {
     });
 
     return {
-      data: data.items.map(this.transformProject),
+      data: data.items.map(item => this.transformProject(item)),
       status: 200,
       message: 'Success'
     };
