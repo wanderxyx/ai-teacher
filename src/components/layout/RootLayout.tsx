@@ -2,6 +2,8 @@ import React from 'react';
 import { AppShell, Title, NavLink, Group, ActionIcon, useMantineColorScheme, rem } from '@mantine/core';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { IconHome, IconApps, IconSun, IconMoon } from '@tabler/icons-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ErrorBoundary } from '../common/ErrorBoundary';
 
 const RootLayout: React.FC = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -45,7 +47,20 @@ const RootLayout: React.FC = () => {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Outlet />
+        <ErrorBoundary>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              style={{ height: '100%' }}
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
+        </ErrorBoundary>
       </AppShell.Main>
     </AppShell>
   );
